@@ -1,0 +1,47 @@
+
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "fin_mst_account",
+          "responseFieldName": "accountHeader",
+          "fieldsRequired": "account_name, group_code",
+          "uniqueAccIdentifier": "group_code",
+          "uniqueRowIdentifier": "group_code"
+        }
+    
+       
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        {
+          "responseFieldName": "accountHeader",
+          "tableName": "fin_mst_account",
+          "fieldsRequired": {
+
+           "account_name":"string", 
+           "group_code":"string",
+           "parent_group":"string",
+           "under_primary":"string",
+           "uniq_code":"string"
+           
+          },
+          "lovFields": {
+            
+            "CITY_CODE": {
+              "masterName": "sl_mst_city",
+              "columnsRequired": "city_code, city_name"
+            }
+           
+        },
+          "uniqueRowIdentifier": "group_code",
+          "uniqueAccIdentifier": "group_code"
+        }
+    
+       
+        
+      ]
+    }
+  }
+  

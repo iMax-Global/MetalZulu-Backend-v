@@ -1,0 +1,154 @@
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "ppc_job_dis_hdr",
+          "responseFieldName": "prodHdr",
+          "fieldsRequired":"ppc_code, packing_type, chalan_no, timestamptostring(ppc_date) ppc_date, type_stock, dealer_code, cust_code, mode_of_trans, trans_account, frcode, supply_time, place_of_supply, b_loss_per, eway_bill,  gross_wt, tare_wt, net_wt, grno, timestamptostring(gr_date) gr_date, remark, truck_no, in_job_no",
+          "uniqueInvoiceIdentifier": "ppc_code",
+          "uniqueRowIdentifier": "ppc_code"
+        },
+        
+        {
+          "tableName":"ppc_job_dis_det",
+          "responseFieldName":"prodDetail",
+          "fieldsRequired":"packing_recno,  ppc_code,  item_code, grade,  size_code,  len,  pcs,  total,  rate,  burning, wt, hsn, uom_code, TOTAL_2, ppc_in",
+          "uniqueInvoiceIdentifier":"ppc_code",
+          "uniqueRowIdentifier": "packing_recno"
+        }
+        
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+       
+         
+        {
+          "responseFieldName": "prodHdr",
+          "tableName":  "ppc_job_dis_hdr",
+          "fieldsRequired": {
+            "ppc_code":"string",
+            "packing_type":"string",
+            "chalan_no":"string",
+            "ppc_date":"date",
+            "type_stock":"string",
+            "dealer_code":"string",
+            "cust_code":"number",
+            "mode_of_trans":"string",
+            "trans_account":"string",
+            "frcode":"string",
+            "supply_time":"number",
+            "place_of_supply":"number",
+            "b_loss_per":"number",
+            "eway_bill":"number",
+            "gross_wt":"number",
+            "tare_wt":"number",
+            "net_wt":"string",
+            "grno":"string",
+            "gr_date":"date",
+            "remark":"string",
+            "in_job_no":"string",
+            "truck_no":"number"
+            
+           
+            
+          },
+        
+          "lovFields": {
+
+         
+
+            "ITEM_CATA": {
+              "masterName": "sl_mst_item_category",
+              "columnsRequired": "item_category_code, item_category"
+            },
+
+              "BROKER_CODE": {
+                "masterName": "sl_mst_broker",
+                "columnsRequired": "broker_code, broker_name"
+              },
+            
+              "DISTRIBUTOR_CODE": {
+                "masterName": "sl_mst_distributor",
+                "columnsRequired": "distributor_code, distributor_name"
+              },
+              "DEALER_CODE": {
+                "masterName": "sl_mst_external_entity",
+                "columnsRequired": "external_entity_code, external_entity_name"
+              },             
+              "DEALTYPE_CODE": {
+                "masterName": "pur_mst_dealtype",
+                "columnsRequired": "dealtype_code, dealtype"
+              },
+              "DEL_ADD": {
+                "masterName": "sl_mst_del_site",
+                "columnsRequired": "del_site_code, add_1"
+              },
+              "EMPLOYEE": {
+                "masterName": "sl_mst_employee",
+                "columnsRequired": "employee_code, employee_name"
+              }
+               
+          },
+          "uniqueRowIdentifier": "ppc_code",
+          "uniqueInvoiceIdentifier": "ppc_code"
+        },
+      
+     
+        {
+      
+      "responseFieldName": "prodDetail",
+      "tableName": "ppc_job_dis_det",
+      "typeArray": true,
+      "fieldsRequired": {
+        "ppc_code":"string",
+        "item_code":"number",
+        "grade":"number",
+        "size_code":"number",
+        "len":"number", 
+        "pcs":"number",
+        "total":"number",
+        "total_2":"number",
+        "rate":"number",
+        "burning":"number",
+        "wt":"number",
+        "hsn":"string",
+        "uom_code":"number",
+        "out_excess":"string",
+        "ppc_in":"string"
+        
+       
+
+    },
+    "lovFields": {
+
+
+      "ITEM_CODE": {
+        "masterName": "sl_mst_item",
+        "columnsRequired": "item_code, item_name"
+      },
+      "UOM_FOR_ITEMS":{
+        "masterName": "sl_mst_uom",
+        "columnsRequired": "uom_code, uom"
+      },
+
+      "SIZE_CODE": {
+        "masterName": "sl_mst_size",
+        "columnsRequired": "size_code, item_size"
+      },
+      "QUALITY": {
+        "masterName": "sl_mst_quality",
+        "columnsRequired": "quality_code, quality"
+      }
+   
+    
+    },
+
+    "uniqueRowIdentifier": "packing_recno",
+    "uniqueInvoiceIdentifier": "ppc_code"
+        }
+     
+      ]
+    }
+}
+  

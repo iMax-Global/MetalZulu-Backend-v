@@ -1,0 +1,177 @@
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "PROD_EXEC_HDR",
+          "responseFieldName": "prodHdr",
+          "fieldsRequired":"exec_code, timestamptostring(exec_date)  exec_date,  timestamptostringwithtime(from_time) from_time, timestamptostringwithtime(to_time) to_time, no_of_hr, melter_incharge, chemical_incharge, scraper, patch_no, auto_patch, furnace, contractor_cd, shift_cd, produced_by, elec_cons",
+          "uniqueReqIdentifier": "exec_code",
+          "uniqueRowIdentifier": "exec_code"
+        },
+
+        {
+          "tableName":"PROD_EXEC_PRODUCT_DET",
+          "responseFieldName":"prodDetail",
+          "fieldsRequired":"uniq_id, item_cd, size_cd, quality_cd, pcs, qty, rate, uom_code",
+          "uniqueReqIdentifier":"exec_cd",
+          "uniqueRowIdentifier": "uniq_id"
+        },
+        {
+            "tableName":"PROD_EXEC_item_DET",
+            "responseFieldName":"prodConsumDet",
+            "fieldsRequired":"uniq_id, item_cd, size_cd, quality_cd, pcs, qty, rate, uom_code",
+            "uniqueReqIdentifier":"exec_cd",
+            "uniqueRowIdentifier": "uniq_id"
+        },
+
+        {
+            "tableName":"T_ELECTRICITY_CONS_DET",
+            "responseFieldName":"prodElecDet",
+            "fieldsRequired":"uniq_id, meter_no, rate_unit, reading, current_reading, pmt_unit",
+            "uniqueReqIdentifier":"ssh_code",
+            "uniqueRowIdentifier": "uniq_id"
+        }
+     
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+       
+        {
+          "responseFieldName": "prodHdr",
+          "tableName":  "PROD_EXEC_HDR",
+          "fieldsRequired": {
+                         
+            "exec_date":"date",
+            "from_time":"datetime",
+            "to_time":"datetime",
+            "no_of_hr":"numeric",
+            "melter_incharge":"string",
+            "scraper":"string",
+            "patch_no":"string",
+            "auto_patch":"numeric",
+            "furnace":"numeric",
+            "chemical_incharge":"string",
+            "contractor_cd":"numeric",
+            "shift_cd":"string",
+            "produced_by":"string",
+            "elec_cons":"numeric"
+          },
+
+          "lovFields": {
+
+             "ROLLING_MAN": {
+              "masterName": "sl_mst_employee",
+              "columnsRequired": "employee_code, employee_name"
+             },
+
+             "SHIFT_CD": {
+                "masterName": "HR_MST_SHIFT",
+                "columnsRequired": "shift_code, shift_desc"
+              },
+
+            "CONTRACT_CD": {
+                "masterName": "sl_mst_cont_hdr",
+                "columnsRequired": " contractor_code, contractor_name"
+              },
+
+             
+             
+           "FURNANCE_CD": {
+                "masterName": "pur_mst_furnace",
+                "columnsRequired": "furnace_code, furnace_description"
+              }
+
+            
+       
+          },
+          
+          "uniqueRowIdentifier": "exec_code",
+          "uniqueReqIdentifier": "exec_code"
+         
+        },
+         
+    {
+     
+      "responseFieldName": "prodDetail",
+      "tableName": "PROD_EXEC_PRODUCT_DET",
+      "typeArray": true,
+      "fieldsRequired": {
+       
+        "item_cd":"number",
+        "size_cd":"number",
+        "quality_cd":"number",
+        "uom_code":"number",
+        "pcs":"number",
+        "qty":"number",
+        "rate":"number"
+    },
+    "lovFields": {
+
+      "ITEM_CD": {
+        "masterName": "sl_mst_item",
+        "columnsRequired": "item_code, item_name"
+      }
+ 
+    },
+
+    "uniqueRowIdentifier": "uniq_id",
+    "uniqueReqIdentifier":"exec_cd"
+  },
+  {
+     
+    "responseFieldName": "prodConsumDet",
+    "tableName": "PROD_EXEC_item_DET",
+    "typeArray": true,
+    "fieldsRequired": {
+     
+      "item_cd":"number",
+      "size_cd":"number",
+      "quality_cd":"number",
+      "uom_code":"number",
+      "pcs":"number",
+      "qty":"number",
+      "rate":"number"
+  },
+  "lovFields": {
+
+    "ITEM_CODE": {
+      "masterName": "sl_mst_item",
+      "columnsRequired": "item_code, item_name"
+    }
+
+  },
+
+  "uniqueRowIdentifier": "uniq_id",
+  "uniqueReqIdentifier":"exec_cd"
+},
+
+{
+     
+    "responseFieldName": "prodElecDet",
+    "tableName": "T_ELECTRICITY_CONS_DET",
+    "typeArray": true,
+    "fieldsRequired": {
+     
+      "meter_no":"number",
+      "rate_unit":"number",
+      "reading":"number",
+      "current_reading":"number",
+      "pmt_unit":"number"
+  },
+  "lovFields": {
+
+    "METER_CODE": {
+      "masterName": "pur_mst_meter",
+      "columnsRequired": "meter_code, meter_no"
+    }
+
+  },
+
+  "uniqueRowIdentifier": "uniq_id",
+  "uniqueReqIdentifier":"ssh_code"
+}
+     
+      ]
+    }
+}

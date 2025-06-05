@@ -1,0 +1,51 @@
+
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "sl_mst_city",
+          "responseFieldName": "cityHeader",
+          "fieldsRequired": "city_code, city_name, state_code, distt, country_code",
+          "uniqueCityIdentifier": "city_code",
+          "uniqueRowIdentifier": "city_code"
+        }
+        
+       
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        {
+          "responseFieldName": "cityHeader",
+          "tableName": "sl_mst_city",
+          "fieldsRequired": {
+            
+           "city_code":"number", 
+           "city_name":"string", 
+           "state_code":"number",
+           "distt":"string", 
+           "country_code":"number"
+          
+           
+          },
+          "lovFields": {
+            "STATE_CODE": {
+              "masterName": "sl_mst_state",
+              "columnsRequired": "state_code, state_name"
+            },
+            "COUNTRY_CODE": {
+              "masterName": "sl_mst_country",
+              "columnsRequired": "country_code, country_name"
+            }
+        },
+          "uniqueRowIdentifier": "city_code",
+          "uniqueCityIdentifier": "city_code"
+        }
+    
+       
+        
+      ]
+    }
+  }
+  
+  

@@ -1,0 +1,45 @@
+
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "sl_mst_wtbridge",
+          "responseFieldName": "BevHeader",
+          "fieldsRequired": "invoice_code, get_party(cust_party_type) party_display_name, get_distributor(cust_party_code) customer_display_name, wt_code, wb_type, timestamptostring(dt) dt, truck_no, cust_party_type, cust_party_code, gate_no, in_time, out_time, in_wt, out_wt, rmk, net_wt, acid_wt",
+          "uniqueBevIdentifier": "wt_code",
+          "uniqueRowIdentifier": "wt_code"
+        }
+       
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        {
+          "responseFieldName": "BevHeader",
+          "tableName": "sl_mst_wtbridge",
+          "fieldsRequired": {
+            "wb_type": "string",
+            "wt_code":"string",
+            "dt": "date", 
+            "truck_no":"string", 
+            "cust_party_type":"number",
+            "cust_party_code":"number",
+            "gate_no": "string",
+            "in_time":"time",
+            "out_time":"time", 
+            "in_wt":"number", 
+            "out_wt":"number",
+            "rmk":"string",   
+            "net_wt":"number", 
+            "acid_wt":"number",
+            "invoice_code":"string"
+          },
+         
+          "uniqueRowIdentifier": "wt_code",
+          "uniqueBevIdentifier": "wt_code"
+        }
+        
+      ]
+    }
+  }
+  

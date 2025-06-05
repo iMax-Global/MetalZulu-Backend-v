@@ -1,0 +1,147 @@
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "pur_mrir_hdr",
+          "responseFieldName": "mrirHdr",
+          "fieldsRequired":"mrir_code, m_type, timestamptostring(mrir_date) mrir_date, deal_code, party_code, currency_cd, currency_rate1, grass_weight, taire_weight, received_weight, party_wt, left_qty, import, timestamptostring(bill_date) bill_date, bill_no, po_type1,  payment_days, truck_no, gate_pass",
+          "uniqueMrirIdentifier": "mrir_code",
+          "uniqueRowIdentifier": "mrir_code"
+        },
+        
+        {
+          "tableName":"pur_mrir_det",
+          "responseFieldName":"mrirDetail",
+          "fieldsRequired":"unique_code, mrir_code, item_code, size_code, quality_code, uom_code, discount_on, discount, amount, hsn, rate1, rate, dis_type, amount2, remarks, total_qty",
+          "uniqueMrirIdentifier":"mrir_code",
+          "uniqueRowIdentifier": "unique_code"
+        }
+ 
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        
+        {
+          "responseFieldName": "mrirHdr",
+          "tableName":  "pur_mrir_hdr",
+          "fieldsRequired": {
+            "mrir_code":"string",
+            "truck_no":"string",
+            "gate_pass":"string",
+            "mrir_date":"date",
+            "deal_code":"number",
+            "party_code":"number",
+            "bill_no":"string",
+           "po_ref":"string",
+            "currency_cd":"number",
+            "currency_rate1":"number",
+            "grass_weight":"number",
+            "taire_weight":"number",
+            "received_weight":"number",
+            "party_wt":"number",
+            "left_qty":"number",
+            "bill_date":"date",
+            "m_type":"string"
+            
+           
+
+          },
+        
+          "lovFields": {
+            
+              "PARTY_CODE": {
+                "masterName": "pur_mst_party",
+                "columnsRequired": "party_code, party_name"
+              },
+            
+              "DEAL_CODE": {
+                "masterName": "pur_mst_dealtype",
+                "columnsRequired": "dealtype_code, dealtype"
+              },
+              "CURRENCY_CD": {
+                "masterName": "currency_mst",
+                "columnsRequired": "currency_code, currency"
+              } ,
+              "GATE_NO": {
+                "masterName": "currency_mst",
+                "columnsRequired": "currency_code, currency"
+              }         
+              
+             
+          },
+          "uniqueRowIdentifier": "mrir_code",
+          "uniqueMrirIdentifier": "mrir_code"
+        },
+      
+     
+        {
+      
+      "responseFieldName": "mrirDetail",
+      "tableName": "pur_mrir_det",
+      "typeArray": true,
+      "fieldsRequired": {
+        "mrir_code":"string",
+        "item_code":"number",
+        "size_code":"number",
+        "quality_code":"number",
+        "uom_code":"number",
+        "store_cd":"number",
+        "item_acc_code":"number", 
+        "ordered_qty":"number",
+        "deal_rate":"number",
+        "discount_on":"string",
+        "discount":"number",
+        "rmd_recno":"string",           
+        "rmd_code":"string",
+        "factory_arrival_code":"string",
+        "gate_uniq":"string",
+        "amount":"number",
+        "hsn":"number",
+        "rate1":"number",
+        "rate":"number",
+        "dis_type":"string",
+        "deal_rate1":"number",
+        "con_qty":"number",
+        "con_uom":"number",
+        "gross_p":"number",
+        "received_qty":"number",
+        "amount2":"number",
+        "remarks":"string",
+        "h_tax":"string",
+        "total_qty":"number"
+        
+
+    },
+    "lovFields": {
+
+
+      "ITEM_CODE": {
+        "masterName": "sl_mst_item",
+        "columnsRequired": "item_code, item_name"
+      },
+      "UOM_FOR_ITEMS":{
+        "masterName": "sl_mst_uom",
+        "columnsRequired": "uom_code, uom"
+      },
+
+      "SIZE_CODE": {
+        "masterName": "sl_mst_size",
+        "columnsRequired": "size_code, item_size"
+      },
+      "QUALITY": {
+        "masterName": "sl_mst_quality",
+        "columnsRequired": "quality_code, quality"
+      }
+    
+    
+    },
+
+    "uniqueRowIdentifier": "unique_code",
+    "uniqueMrirIdentifier": "mrir_code"
+        }
+     
+      ]
+    }
+}
+  

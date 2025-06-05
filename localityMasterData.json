@@ -1,0 +1,46 @@
+
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "sl_mst_locality",
+          "responseFieldName": "localityHeader",
+          "fieldsRequired": "locality_code, description, city_code",
+          "uniqueLocalityIdentifier": "locality_code",
+          "uniqueRowIdentifier": "locality_code"
+        }
+        
+       
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        
+        {
+          "responseFieldName": "localityHeader",
+          "tableName": "sl_mst_locality",
+          "fieldsRequired": {
+            
+           "locality_code":"number", 
+           "description":"string", 
+           "city_code":"number"
+          
+          
+           
+          },
+          "lovFields": {
+            "CITY_CODE": {
+              "masterName": "sl_mst_city",
+              "columnsRequired": "city_code, city_name"
+            }
+        },
+          "uniqueRowIdentifier": "locality_code",
+          "uniqueLocalityIdentifier": "locality_code"
+        }
+    
+       
+        
+      ]
+    }
+  }
+  

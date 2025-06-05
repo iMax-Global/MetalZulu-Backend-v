@@ -1,0 +1,130 @@
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "fin_inv_transporter_hdr",
+          "responseFieldName": "prodHdr",
+          "fieldsRequired":"order_code, vendor_code, net_amount, freight_net_amount, act_amt, short , tot_short, left_qty, timestamptostring(bill_date)  bill_date,  timestamptostring(invoice_date) invoice_date, timestamptostring(f_date) f_date, timestamptostring(t_date) t_date, reference_no, remarks",
+          "uniqueReqIdentifier": "order_code",
+          "uniqueRowIdentifier": "order_code"
+        },
+
+        {
+          "tableName":"fin_mst_transporter_det",
+          "responseFieldName":"prodDetail",
+          "fieldsRequired":"uniq_id, account_code1, charge_type, account_code2, run_total, entry_type, charge, abatement, net_amount, aba_on_val, total",
+          "uniqueReqIdentifier":"order_code",
+          "uniqueRowIdentifier": "uniq_id"
+        },
+
+        {
+            "tableName":"fin_transport_inv_det",
+            "responseFieldName":"prodConsumDet",
+            "fieldsRequired":"scd_code, import_no, truck_no1, mrir_inv_date, pcs , party_wt, trans_wt, basic_tr_rate, trans_rate, update_rate, trans_fixed, fixed_rate, sel_opt, ref_mrir, ref_mrir_type",
+            "uniqueReqIdentifier":"order_code",
+            "uniqueRowIdentifier": "scd_code"
+        }
+      ]
+                 },
+
+
+
+    "createNupdate": {
+      "fieldNames": [
+        
+    {
+          "responseFieldName": "prodHdr",
+          "tableName":  "fin_inv_transporter_hdr",
+          "fieldsRequired": {
+                  
+            "bill_date":"date",
+            "invoice_date":"date",
+            "f_date":"date",
+            "t_date":"date",
+            "reference_no":"string",
+            "remarks":"string",
+            "net_amount":"number",
+            "freight_net_amount":"number",
+            "act_amt":"number",
+            "short":"number",
+            "tot_short":"number",
+            "left_qty":"number"
+          },
+          "uniqueRowIdentifier": "order_code",
+          "uniqueReqIdentifier": "order_code"
+          
+    },         
+    {
+      
+      "responseFieldName": "prodDetail",
+      "tableName": "fin_mst_transporter_det",
+      "typeArray": true,
+      "fieldsRequired": {
+        
+        "account_code1":"number",
+        "charge_type":"string",
+        "account_code2":"number",
+        "run_total":"string",
+        "entry_type":"string", 
+        "charge":"number",
+        "abatement":"number",
+        "net_amount":"number",
+        "aba_on_val":"number",
+        "total":"number"
+       
+    },
+    "lovFields": {
+
+      "ITEM_CODE": {
+        "masterName": "sl_mst_item",
+        "columnsRequired": "item_code, item_name"
+      }
+ 
+    },
+
+    "uniqueRowIdentifier": "uniq_id",
+    "uniqueReqIdentifier":"order_code"
+    },
+    {
+      
+    "responseFieldName": "prodConsumDet",
+    "tableName": "fin_transport_inv_det",
+    "typeArray": true,
+    "fieldsRequired": {
+       
+      "import_no":"string",
+      "mrir_inv_date":"date",
+      "truck_no1":"string",
+      "party_wt":"number",
+      "trans_wt":"number",
+      "basic_tr_rate":"number", 
+      "update_rate":"number",
+      "trans_rate":"number",
+      "fixed_rate":"number",
+      "ref_mrir":"number",
+      "ref_mrir_type":"number",
+      "trans_fixed":"number",
+      "sel_opt":"string",
+      "pcs":"number"
+  },
+  "lovFields": {
+
+    "ITEM_CODE": {
+      "masterName": "sl_mst_item",
+      "columnsRequired": "item_code, item_name"
+    }
+
+  },
+
+  "uniqueRowIdentifier": "scd_code",
+  "uniqueReqIdentifier":"order_code"
+    }
+
+      ]
+    }
+}
+
+
+
+
+

@@ -1,0 +1,47 @@
+
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "sl_mst_state",
+          "responseFieldName": "stateHeader",
+          "fieldsRequired": "state_code, state_name, country_code, sn",
+          "uniqueStateIdentifier": "state_code",
+          "uniqueRowIdentifier": "state_code"
+        }
+        
+       
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        {
+          "responseFieldName": "stateHeader",
+          "tableName": "sl_mst_state",
+          "fieldsRequired": {
+            
+        
+           "state_name":"string", 
+           "state_code":"number",
+            "sn":"string",
+           "country_code":"number"
+          
+           
+          },
+          "lovFields": {
+           
+            "COUNTRY_CODE": {
+              "masterName": "sl_mst_country",
+              "columnsRequired": "country_code, country_name"
+            }
+        },
+          "uniqueRowIdentifier": "state_code",
+          "uniqueStateIdentifier": "state_code"
+        }
+    
+       
+        
+      ]
+    }
+  }
+  

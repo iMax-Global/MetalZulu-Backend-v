@@ -1,0 +1,60 @@
+{
+  "getNdelete": {
+    "dataSources": [
+      {
+        "tableName": "fin_mst_t_voucher_hdr",
+        "responseFieldName": "VoucherHeader",
+        "fieldsRequired": "voucher_code, voucher_type, timestamptostring(voucher_date) voucher_date, account_codeh, ref_voucher_code, cheque_no, timestamptostring(cheque_date) cheque_date, DR, cr, narration",
+        "uniqueVoucherIdentifier": "voucher_code",
+        "uniqueRowIdentifier": "voucher_code"
+      },
+      
+      {
+        "tableName": "fin_mst_t_voucher_det",
+        "responseFieldName": "VoucherDetail",
+        "fieldsRequired": "unique_id, voucher_code, entry_type, account_code, amount, budget_code, cost_code, department_code",
+        "uniqueVoucherIdentifier": "voucher_code",
+        "uniqueRowIdentifier": "unique_id"
+      } 
+    ]
+  },
+  "createNupdate": {
+    "fieldNames": [
+      {
+        "responseFieldName": "VoucherHeader",
+        "tableName": "fin_mst_t_voucher_hdr",
+        "fieldsRequired": {
+          "voucher_type": "string",
+          "voucher_date": "date",
+          "cheque_date": "date",
+          "account_codeh": "number",
+          "ref_voucher_code":"string",
+          "cheque_no": "string",
+          "dr": "number",
+          "cr": "number",
+          "narration":"string"
+        },
+        "uniqueRowIdentifier": "voucher_code",
+        "uniqueVoucherIdentifier": "voucher_code"
+      },
+      
+
+      {
+        "responseFieldName": "VoucherDetail",
+        "tableName": "fin_mst_t_voucher_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "entry_type": "string",
+          "account_code": "number",
+          "external_entity_code":"number",
+          "amount": "number",
+          "cost_code": "number",
+          "budget_code": "number",
+          "department_code": "number"
+        },
+        "uniqueRowIdentifier": "unique_id",
+        "uniqueVoucherIdentifier": "voucher_code"
+      }
+    ]
+  }
+}

@@ -1,0 +1,551 @@
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const cookieParser = require("cookie-parser");
+const app = express();
+const wrapper = require("./utils/wrapper");
+const { Client } = require("pg");
+const bodyParser = require("body-parser");
+
+// REQUIRING ROUTERS
+const userRouter = require("./routes/userRoutes");
+const cnsRouter = require("./routes/cnsRoutes");
+const authController = require("./controllers/authController");
+const employeeMiscRouter = require("./routes/employeeMiscRoutes");
+const itemMasterRouter = require("./routes/itemMasterRoutes");
+const customerMasterRouter = require("./routes/customerMasterRoutes");
+const SalesOrderRouter = require("./routes/SalesOrderRoutes");
+const categoryDetail = require("./routes/categoryDetailRoutes");
+const miscSalesRouter = require("./routes/salesMiscRoutes");
+const InvoiceRouter = require("./routes/InvoiceRoutes");
+const accountMasterRouter = require("./routes/accountMasterRoutes");
+const itemTaxRouter = require("./routes/itemWiseTaxRoutes");
+const gaugePolicyRouter = require("./routes/GaugePolicyRoutes");
+const contractRoutes = require("./routes/contractRoutes");
+const VoucherRoutes = require("./routes/VoucherRoutes");
+const Dashboard = require("./routes/dashbordRoutes");
+const  DashboardAdmin = require("./routes/AdmindashbordRoutes");
+const DashboardPurchase = require("./routes/purchasedashRoutes ");
+const DashboardProdution = require("./routes/productiondashRoutes");
+const DashboardPayroll   = require("./routes/payrolldashRoutes");
+const DashboardGatecontrol = require("./routes/gateDashboard");
+const dealerMasterRouter = require("./routes/dealerMasterRoutes");
+const openingBalanceRouter = require("./routes/openingBalanceRoutes");
+const RequisitionRouter = require("./routes/RequisitionRoutes");
+const dailyIssueRouter = require("./routes/dailyIssueRoutes");
+const stockAdjustmnet = require("./routes/StockAdjust");
+const dailyProd = require("./routes/dailyProdeRoutes");
+const rollingProd = require("./routes/rollingProdRoutes");
+const purchaseIndent = require("./routes/PurchaseRequisitionRoutes");
+const purchaseOrder = require("./routes/purchaseOrderRoutes");
+const weightBridgeRouter = require("./routes/WeightBridgeInwardRoutes");
+const mrir = require("./routes/mrirRoutes");
+const breakdownFeed = require("./routes/breakdown_route");
+const issuereturnroute = require("./routes/issuereturnroute");
+const purchasereturnroute = require("./routes/purchaseReturnRoute");
+const inwardgp = require("./routes/ingproutes");
+const ogdata = require("./routes/outwardgatepassroutes");
+const pgdata = require("./routes/packingformroutes");
+const SalesReturn = require("./routes/salesroutes");
+const controldat = require("./routes/controlRoomRoutes");
+const salesReturns = require("./routes/dailyRoutes");
+const vendermaster = require("./routes/venderMasterRoutes");
+const chargeMasterRouter = require("./routes/chargeMasterRoutes");
+const stateMasterRouter = require("./routes/stateMasterRoutes");
+const localityMasterRouter = require("./routes/localityMasterRoutes");
+const cityMasterRouter = require("./routes/cityMasterRoutes");
+const stockdash = require("./routes/stockdashRoutes");
+const finDash = require("./routes/financedashRoutes");
+const stockRoutes = require("./routes/stockRoutes");
+const groupRoutes = require("./routes/groupMasterRoutes");
+const transportRoutes = require("./routes/transporterRoutes");
+const jobwork = require("./routes/jobWorkRoutes");
+const payroll = require("./routes/payRollRoutes");
+const employee = require("./routes/employeeMasterRoutes");
+const norms = require("./routes/normRoutes");
+const jobworkInward = require("./routes/jobWorkInWardRoutes");
+const DailyAttendance = require("./routes/dailyAttendanceRoutes");
+
+const AdministratorRoute = require("./routes/administratorRoutes");
+
+const SalaryProcess = require("./routes/salaryProcessRoutes");
+const AdministratorModule=require("./routes/administratorRightRoutes")
+const UnitMaster=require("./routes/unitMasterRoutes")
+//with slack work as a team
+//faerhgljkgfdgfds demo for Pramod ji
+// 1) MIDDLEWARES
+
+// Implement CORS
+// Access Control Allow Origin
+// Allowing requests from only front end of this project..! --- MUST BE ADDED IMMEDIATELY AFTER DEPLPOYMENT!🛠
+app.use(
+  cors({
+    origin: ["http://localhost:3005", "http://localhost:3006","https://app.metalzulu.com", "https://metal-zulu-frontend.vercel.app","https://metal-zulu.vercel.app"],
+    credentials: true,
+  })
+)
+//Responding to OPTIONS req or pre-flight phase
+app.options("*", cors());
+
+// Set security HTTP headers
+// app.use(helmet());
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+//       'script-src': ["'self'", "'unsafe-inline'"],
+//     },
+//   })
+// );
+
+const limiter = rateLimit({
+  max: 150,
+  windowMs: 60 * 60 * 1000,
+  message: "Too many requests from this IP, please try again in an hour!",
+});
+app.use("/api", limiter);
+
+app.use(express.static("frontend/build"));
+
+// if (process.env.NODE_ENV === 'development') {
+//   app.use(morgan('dev'));
+// }
+
+app.use(express.json());
+app.use(cookieParser());
+
+// Data sanitization against NoSQL query injection
+// app.use(mongoSanitize());
+
+// Data sanitization against XSS
+app.use(xss());
+
+// 3) Add app.use to Routes using Routers
+app.use("/api/v1/users", userRouter);
+//app.use('/api/v1/reports', authController.protect, authController.checkUser('employee'), reportRouter);
+//app.use('/api/v1/schedule-report', authController.protect, authController.checkUser('employee'), reportScheduleRouter);
+app.use(
+  "/api/v1/cns",
+  authController.protect,
+  authController.checkUser("employee"),
+  cnsRouter
+);
+//
+app.use(
+  "/api/v1/employee-misc",
+  authController.protect,
+  authController.checkUser("payroll"),
+  employeeMiscRouter
+);
+
+app.use(
+  "/api/v1/items",
+  authController.protect,
+  authController.checkUser("Sales"),
+  itemMasterRouter
+);
+
+app.use(
+  "/api/v1/salesreturn",
+  authController.protect,
+  authController.checkUser("Sales"),
+  salesReturns
+);
+app.use(
+  "/api/v1/customerm",
+  authController.protect,
+  authController.checkUser("Sales"),
+  customerMasterRouter
+);
+
+app.use(
+  "/api/v1/salesOrder",
+  authController.protect,
+  authController.checkUser("Sales"),
+  SalesOrderRouter
+);
+
+app.use(
+  "/api/v1/salesOrderm",
+  authController.protect,
+  authController.checkUser("Sales"),
+  categoryDetail
+);
+
+app.use(
+  "/api/v1/salesMisc",
+  authController.protect,
+  authController.checkUser("Sales"),
+  miscSalesRouter
+);
+
+app.use(
+  "/api/v1/salesInvoice",
+  authController.protect,
+  authController.checkUser("Sales"),
+  InvoiceRouter
+);
+
+app.use(
+  "/api/v1/stock",
+  authController.protect,
+  authController.checkUser("Stock Control"),
+  stockRoutes
+);
+
+app.use(
+  "/api/v1/account",
+  authController.protect,
+  authController.checkUser("Sales"),
+  accountMasterRouter
+);
+app.use(
+  "/api/v1/tax",
+  authController.protect,
+  authController.checkUser("Sales"),
+  itemTaxRouter
+);
+
+app.use(
+  "/api/v1/city",
+  authController.protect,
+  authController.checkUser("Sales"),
+  cityMasterRouter
+);
+app.use(
+  "/api/v1/locality",
+  authController.protect,
+  authController.checkUser("Sales"),
+  localityMasterRouter
+);
+
+app.use(
+  "/api/v1/charge",
+  authController.protect,
+  authController.checkUser("Sales"),
+  chargeMasterRouter
+);
+
+app.use(
+  "/api/v1/state",
+  authController.protect,
+  authController.checkUser("Sales"),
+  stateMasterRouter
+);
+
+app.use(
+  "/api/v1/group",
+  authController.protect,
+  authController.checkUser("Sales"),
+  groupRoutes
+);
+
+
+app.use(
+  "/api/v1/gauge",
+  authController.protect,
+  authController.checkUser("Sales"),
+  gaugePolicyRouter
+);
+app.use(
+  "/api/v1/salesContract",
+  authController.protect,
+  authController.checkUser("Sales"),
+  contractRoutes
+);
+
+app.use(
+  "/api/v1/transport",
+  authController.protect,
+  authController.checkUser("Trasporter"),
+  transportRoutes
+);
+// app.use(
+//   "/api/v1/voucher",
+//   authController.protect,
+//   authController.checkUser("Sales"),
+//   VoucherRoutes
+// );
+app.use(
+  "/api/v1/dashboard",
+  authController.protect,
+  authController.checkUser("Sales"),
+  Dashboard
+);
+
+app.use(
+  "/api/v1/dashboard-purchase",
+  authController.protect,
+  authController.checkUser("Procurement Management"),
+  DashboardPurchase
+);
+
+app.use(
+  "/api/v1/dashboardadmin",
+  authController.protect,
+  authController.checkUser("Administrator Module"),
+  DashboardAdmin
+);
+
+app.use(
+  "/api/v1/dashboard-payroll",
+  authController.protect,
+  authController.checkUser("Payroll"),
+  DashboardPayroll
+);
+
+
+app.use(
+  "/api/v1/dashboard-gatecontrol",
+  authController.protect,
+  authController.checkUser("Gate Control"),
+  DashboardGatecontrol
+);
+
+app.use(
+  "/api/v1/dashboard-stockdash",
+  authController.protect,
+  authController.checkUser("Stock Control"),
+  stockdash
+);
+app.use(
+  "/api/v1/dashboard-production",
+  authController.protect,
+  authController.checkUser("Production"),
+  DashboardProdution
+);
+
+app.use(
+  "/api/v1/dealer",
+  authController.protect,
+  authController.checkUser("Sales"),
+  dealerMasterRouter
+);
+
+app.use(
+  "/api/v1/opening",
+  authController.protect,
+  authController.checkUser("Stock Control"),
+  openingBalanceRouter
+);
+
+app.use(
+  "/api/v1/requisition",
+  authController.protect,
+  authController.checkUser("Stock Control"),
+  RequisitionRouter
+);
+
+app.use(
+  "/api/v1/dailyIssue",
+  authController.protect,
+  authController.checkUser("Stock Control"),
+  dailyIssueRouter
+);
+
+app.use(
+  "/api/v1/stockadj",
+  authController.protect,
+  authController.checkUser("Stock Control"),
+  stockAdjustmnet
+);
+
+app.use(
+  "/api/v1/dailyprod",
+  authController.protect,
+  authController.checkUser("Production"),
+  dailyProd
+);
+app.use(
+  "/api/v1/rollingprod",
+  authController.protect,
+  authController.checkUser("Production"),
+  rollingProd
+);
+
+app.use(
+  "/api/v1/purchaseindent",
+  authController.protect,
+  authController.checkUser("Procurement Management"),
+  purchaseIndent
+);
+
+app.use(
+  "/api/v1/purchaseorder",
+  authController.protect,
+  authController.checkUser("Procurement Management"),
+  purchaseOrder
+);
+
+app.use(
+  "/api/v1/weighbridge",
+  authController.protect,
+  authController.checkUser("Gate Control"),
+  weightBridgeRouter
+);
+
+app.use(
+  "/api/v1/mrir",
+  authController.protect,
+  authController.checkUser("Procurement Management"),
+  mrir
+);
+
+app.use(
+  "/api/v1/breakdown",
+  authController.protect,
+  authController.checkUser("Production"),
+  breakdownFeed
+);
+
+app.use(
+  "/api/v1/issuereturnroute",
+  authController.protect,
+  authController.checkUser("Stock Control"),
+  issuereturnroute
+);
+
+app.use(
+  "/api/v1/purchaseReturnRoute",
+  authController.protect,
+  authController.checkUser("Procurement Management"),
+  purchasereturnroute
+);
+
+app.use(
+  "/api/v1/inwarddatagp",
+  authController.protect,
+  authController.checkUser("Gate Control"),
+  inwardgp
+);
+
+app.use(
+  "/api/v1/outwardgatepassdata",
+  authController.protect,
+  authController.checkUser("Gate Control"),
+  ogdata
+);
+
+app.use(
+  "/api/v1/packdata",
+  authController.protect,
+  authController.checkUser("Sales"),
+  pgdata
+);
+
+app.use(
+  "/api/v1/salesreturn",
+  authController.protect,
+  authController.checkUser("Sales"),
+  SalesReturn
+);
+
+app.use(
+  "/api/v1/controldata",
+  authController.protect,
+  authController.checkUser("Financial Management"),
+  controldat
+);
+
+app.use(
+  "/api/v1/jobwork",
+  authController.protect,
+  authController.checkUser("Job Work"),
+  jobwork
+);
+
+app.use(
+  "/api/v1/jobworkInward",
+  authController.protect,
+  authController.checkUser("Job Work"),
+  jobworkInward
+);
+
+app.use(
+  "/api/v1/payroll",
+  authController.protect,
+  authController.checkUser("Payroll"),
+  payroll
+);
+
+app.use(
+  "/api/v1/dailyattendance",
+  authController.protect,
+  authController.checkUser("Payroll"),
+  DailyAttendance
+);
+app.use(
+  "/api/v1/fin-dash",
+  authController.protect,
+  authController.checkUser("Financial Management"),
+  finDash
+);
+
+app.use(
+  "/api/v1/voucher",
+  authController.protect,
+  authController.checkUser("Financial Management"),
+  VoucherRoutes
+);
+
+app.use(
+  "/api/v1/vender",
+  authController.protect,
+  authController.checkUser("Procurement Management"),
+  vendermaster
+);
+
+app.use(
+  "/api/v1/employees",
+  authController.protect,
+  authController.checkUser("Administrator Module"),
+  employee
+);
+
+
+app.use(
+  "/api/v1/unit",
+  authController.protect,
+  authController.checkUser("Administrator Module"),
+  UnitMaster
+);
+app.use(
+  "/api/v1/norms",
+  authController.protect,
+  authController.checkUser("Payroll"),
+  norms
+);
+
+app.use(
+  "/api/v1/master",
+  authController.protect,
+  authController.checkUser("Administrator Module"),
+  AdministratorRoute 
+)
+
+
+
+app.use(
+  "/api/v1/salary-process",
+  authController.protect,
+  authController.checkUser("Payroll"),
+  SalaryProcess
+);
+app.use(
+  "/api/v1/admistraterright",
+  authController.protect,
+  authController.checkUser("Administrator Module"),
+  AdministratorModule
+);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+  // const index = path.join(__dirname,   './public/index.html');
+  // res.sendFile(index);
+  // res.sendFile(__dirname + '/index.html');
+});
+
+module.exports = app;

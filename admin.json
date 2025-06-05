@@ -1,0 +1,74 @@
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "sl_sec_spec_item_hdr",
+          "responseFieldName": "itemTax",
+          "fieldsRequired":"spec_code, item_code, expiry_days, role_cd, company_code",
+          "uniqueReqIdentifier": "spec_code",
+          "uniqueRowIdentifier": "spec_code"
+        },
+
+        {
+          "tableName":"sl_sec_spec_item_det",
+          "responseFieldName":"taxDet",
+          "fieldsRequired":"spec_cd, unit_code, module, from_time, to_time, uniq_cd",
+          "uniqueReqIdentifier":"spec_cd",
+          "uniqueRowIdentifier": "uniq_cd"
+        }
+
+       
+      ]
+                 },
+
+    "createNupdate": {
+      "fieldNames": [
+        
+    {
+          "responseFieldName": "itemTax",
+          "tableName":  "sl_sec_spec_item_hdr",
+          "fieldsRequired": {
+                  
+            "spec_code": "string",
+        "item_code": "string",
+        "expiry_days": "string",
+        "role_cd":"string",
+        "company_code": "number"
+       
+          },
+          "uniqueRowIdentifier": "spec_code",
+          "uniqueReqIdentifier": "spec_code"
+          
+    },         
+    {
+      
+      "responseFieldName": "taxDet",
+      "tableName": "sl_sec_spec_item_det",
+      "typeArray": true,
+      "fieldsRequired": {
+        
+        
+        "unit_code": "number",
+        "module": "string", 
+        "from_time": "datetime",
+        "to_time": "datetime"
+       
+    },
+    
+    "uniqueRowIdentifier": "uniq_cd",
+    "uniqueReqIdentifier":"spec_cd"
+    }
+   
+
+
+
+    
+
+      ]
+    }
+}
+
+
+
+
+

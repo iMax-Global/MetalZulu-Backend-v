@@ -1,0 +1,10 @@
+psycopg2
+psycopg2-binary
+google-cloud
+google-api-python-client
+python-dotenv
+oracledb
+flask
+google.generativeai
+flask-cors
+torch

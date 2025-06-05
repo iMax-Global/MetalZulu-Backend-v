@@ -1,0 +1,60 @@
+
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "sl_mst_site",
+          "responseFieldName": "cityHeader",
+          "fieldsRequired": "site_code, site_desc, state_code, service_tax_no, pin_code, add1, city_code, ph1, pan_no, email, gst_no, cin_no, bank_name, ifsc_cd",
+          "uniqueCityIdentifier": "site_code",
+          "uniqueRowIdentifier": "site_code"
+        }
+        
+       
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        {
+          "responseFieldName": "cityHeader",
+          "tableName": "sl_mst_site",
+          "fieldsRequired": {
+            
+           "city_code":"number", 
+           "site_desc":"string", 
+           "state_code":"number",
+           "service_tax_no":"string",
+           "add1":"string", 
+           "pin_code":"number",
+           "ph1":"number",
+           "pan_no":"string",
+           "email":"string", 
+           "gst_no":"string", 
+           "cin_no":"string", 
+           "bank_name":"string",
+           "ifsc_cd":"string",
+           "start_date":"date"
+          
+           
+          },
+          "lovFields": {
+            "STATE_CODE": {
+              "masterName": "sl_mst_state",
+              "columnsRequired": "state_code, state_name"
+            },
+            "CITY_CODE": {
+              "masterName": "sl_mst_city",
+              "columnsRequired": "city_code, city_name"
+            }
+        },
+          "uniqueRowIdentifier": "site_code",
+          "uniqueCityIdentifier": "site_code"
+        }
+    
+       
+        
+      ]
+    }
+  }
+  
+  

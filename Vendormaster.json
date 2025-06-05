@@ -1,0 +1,64 @@
+
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "pur_mst_party",
+          "responseFieldName": "DealerHeader",
+          "fieldsRequired": "party_code, party_name, type_code, acc_group_code, add1, city, pin_no, ph1, account_code, email, pan_no, service_tax",
+          "uniqueSaudaIdentifier": "party_code",
+          "uniqueRowIdentifier": "party_code"
+        }
+    
+       
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        {
+          "responseFieldName": "DealerHeader",
+          "tableName": "pur_mst_party",
+          "fieldsRequired": {
+            
+           "party_code":"number", 
+           "party_name":"string", 
+           "type_code":"number",
+           "acc_group_code":"number",
+           "add1":"string",
+           "city":"number", 
+           "pin_no":"string", 
+           "ph1":"string",
+           "account_code":"string",   
+           "email":"string", 
+           "pan_no":"string",
+           "service_tax":"string"
+         
+           
+          },
+          "lovFields": {
+            "CITY_CODE": {
+              "masterName": "sl_mst_city",
+              "columnsRequired": "city_code, city_name"
+            },
+            
+           
+            "GROUP_CODE": {
+                "masterName": "v_debitor_account",
+                "columnsRequired": "group_code, group_name"
+            },
+            "TYPE_CODE": {
+                "masterName": "pur_mst_party_type",
+                "columnsRequired": "type_code, type_desc"
+            }
+
+        },
+          "uniqueRowIdentifier": "party_code",
+          "uniqueSaudaIdentifier": "party_code"
+        }
+    
+       
+        
+      ]
+    }
+  }
+  

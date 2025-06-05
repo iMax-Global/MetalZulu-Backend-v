@@ -1,0 +1,39 @@
+
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "sl_mst_charge",
+          "responseFieldName": "chargeHeader",
+          "fieldsRequired": "charge_code, charge_desc, primary_account, trans_type",
+          "uniqueChargedentifier": "charge_code",
+          "uniqueRowIdentifier": "charge_code"
+        }
+    
+       
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        {
+          "responseFieldName": "chargeHeader",
+          "tableName": "sl_mst_charge",
+          "fieldsRequired": {
+            
+           "charge_code":"number", 
+           "charge_desc":"string", 
+           "trans_type":"string",
+           "primary_account":"number"
+           
+          },
+     
+          "uniqueRowIdentifier": "charge_code",
+          "uniqueChargedentifier": "charge_code"
+        }
+    
+       
+        
+      ]
+    }
+  }
+  

@@ -1,0 +1,270 @@
+{
+  
+    "leave-norms": {
+      "getNdelete": [
+        {
+          "tableName": "hr_leave_norms_hdr",
+          "responseFieldName": "header",
+          "fieldsRequired1": "norms_hdr_code as norm_code, emp_code, sl_mst_department.dept_name as department, sl_mst_designation.designation as designation, sl_mst_employee_type.employee_type as employee_type, to_char(from_date, 'dd-mm-yyyy') as from_date, to_char(to_date, 'dd-mm-yyyy') as to_date",
+          "leftJoiner1": [
+            "left join sl_mst_employee on sl_mst_employee.employee_code = hr_leave_norms_hdr.emp_code",
+            "left join sl_mst_department on sl_mst_department.dept_code = hr_leave_norms_hdr.department_code",
+            "left join sl_mst_designation on sl_mst_designation.designation_code = hr_leave_norms_hdr.designation_code",
+            "left join sl_mst_employee_type on sl_mst_employee_type.employee_type_code = hr_leave_norms_hdr.emp_type"
+          ],
+          "fieldsRequired2": "norms_hdr_code, emp_code, unit_code, department_code, designation_code, emp_type, age, gender, distancefrom, distanceto, to_char(from_date, 'dd-mm-yyyy') as from_date, to_char(to_date, 'dd-mm-yyyy') as to_date, associated_comp, associated_comp_to",
+          "uniqueNormIdentifier": "norms_hdr_code",
+          "uniqueRowIdentifier": "norms_hdr_code"
+        },
+        {
+          "tableName": "hr_leave_norms_det",
+          "responseFieldName": "details",
+          "fieldsRequired2": "norms_det_code, leave_type, leaves_no, leave_pay, month_increment",
+          "uniqueNormIdentifier": "norms_hdr_code",
+          "uniqueRowIdentifier": "norms_det_code"
+        }
+      ],
+      "createNupdate": [
+        {
+          "responseFieldName": "header",
+          "tableName": "hr_leave_norms_hdr",
+          "fieldsRequired": {
+            "emp_code": "string",
+            "unit_code": "number",
+            "department_code": "number",
+            "designation_code": "number",
+            "emp_type": "number",
+            "age": "number",
+            "gender": "string",
+            "distancefrom": "number",
+            "distanceto": "number",
+            "from_date": "date",
+            "to_date": "date",
+            "associated_comp": "string",
+            "associated_comp_to": "string"
+          },
+          "lovFields": {
+            "EMP_CODE": {
+              "masterName": "sl_mst_employee",
+              "columnsRequired": "employee_code, employee_name"
+            },
+            "UNIT_CODE": {
+              "masterName": "sl_mst_site",
+              "columnsRequired": "site_code, site_desc"
+            },
+            "DEPARTMENT_CODE": {
+              "masterName": "sl_mst_department",
+              "columnsRequired": "dept_code, dept_name"
+            },
+            "DESIGNATION_CODE": {
+              "masterName": "sl_mst_designation",
+              "columnsRequired": "designation_code, designation"
+            },
+            "EMP_TYPE": {
+              "masterName": "sl_mst_employee_type",
+              "columnsRequired": "employee_type_code, employee_type"
+            }
+          },
+          "uniqueRowIdentifier": "norms_hdr_code",
+          "uniqueNormIdentifier": "norms_hdr_code"
+        },
+        {
+          "responseFieldName": "details",
+          "tableName": "hr_leave_norms_det",
+          "fieldsRequired": {
+            "leave_type": "number",
+            "leaves_no": "number",
+            "leave_pay": "string",
+            "month_increment": "string"
+          },
+          "lovFields": {
+            "LEAVE_TYPE": {
+              "masterName": "hr_mst_leavetype",
+              "columnsRequired": "leavetype_code, leavetype_desc"
+            }
+          },
+          "typeArray": true,
+          "uniqueRowIdentifier": "norms_det_code",
+          "uniqueNormIdentifier": "norms_hdr_code"
+        }
+      ]
+    }
+  
+  ,
+  
+    "salary-norms": {
+      "getNdelete": [
+        {
+          "tableName": "hr_norms_salary_hdr",
+          "responseFieldName": "header",
+          "fieldsRequired1": "salary_norms_hdr_code, sl_mst_employee.employee_name AS employee_name, sl_mst_department.dept_name AS department, sl_mst_designation.designation AS designation, to_char(from_date, 'dd-mm-yyyy') AS from_date, to_char(to_date, 'dd-mm-yyyy') AS to_date, gross_sal",
+          "leftJoiner1": [
+            "left join sl_mst_employee on sl_mst_employee.employee_code = hr_norms_salary_hdr.employee_code",
+            "left join sl_mst_department on sl_mst_department.dept_code = hr_norms_salary_hdr.department_code",
+            "left join sl_mst_designation on sl_mst_designation.designation_code = hr_norms_salary_hdr.designation_code"
+          ],
+          "fieldsRequired2": "salary_norms_hdr_code, state_code, employee_code, department_code, branch_code, designation_code, to_char(from_date, 'dd-mm-yyyy') AS from_date, to_char(to_date, 'dd-mm-yyyy') AS to_date, gross_from, gross_to, gross_sal, emp_type",
+          "uniqueNormIdentifier": "salary_norms_hdr_code",
+          "uniqueRowIdentifier": "salary_norms_hdr_code"
+        },
+        {
+          "tableName": "hr_norms_salary_det",
+          "responseFieldName": "details",
+          "fieldsRequired2": "salary_norms_det_code, allowance_code, allowance_value, allowance_type_code, allowance_effect, referred_allowance_code, reference_type, condition_allowance_code, condition_sign, condition_value",
+          "uniqueNormIdentifier": "salary_norms_hdr_code",
+          "uniqueRowIdentifier": "salary_norms_det_code"
+        }
+      ],
+      "createNupdate": [
+        {
+          "responseFieldName": "header",
+          "tableName": "hr_norms_salary_hdr",
+          "fieldsRequired": {
+            "state_code": "number",
+            "employee_code": "string",
+            "department_code": "number",
+            "branch_code": "number",
+            "product_code": "number",
+            "designation_code": "number",
+            "from_date": "date",
+            "to_date": "date",
+            "gross_from": "number",
+            "gross_to": "number",
+            "gross_sal": "number",
+            "emp_type": "number"
+          },
+          "lovFields": {
+            "STATE_CODE": {
+              "masterName": "sl_mst_state",
+              "columnsRequired": "state_code, state_name"
+            },
+            "BRANCH_CODE": {
+              "masterName": "sl_mst_site",
+              "columnsRequired": "site_code, site_desc"
+            },
+            "DEPARTMENT_CODE": {
+              "masterName": "sl_mst_department",
+              "columnsRequired": "dept_code, dept_name"
+            },
+            "DESIGNATION_CODE": {
+              "masterName": "sl_mst_designation",
+              "columnsRequired": "designation_code, designation"
+            },
+            "EMPLOYEE_CODE": {
+              "masterName": "sl_mst_employee",
+              "columnsRequired": "employee_code, employee_name"
+            },
+            "EMPLOYEE_TYPE": {
+              "masterName": "sl_mst_employee_type",
+              "columnsRequired": "employee_type_code, employee_type"
+            }
+          },
+          "uniqueRowIdentifier": "salary_norms_hdr_code",
+          "uniqueNormIdentifier": "salary_norms_hdr_code"
+        },
+        {
+          "responseFieldName": "details",
+          "tableName": "hr_norms_salary_det",
+          "fieldsRequired": {
+            "allowance_code": "number",
+            "allowance_value": "number",
+            "allowance_type_code": "string",
+            "allowance_effect": "string",
+            "referred_allowance_code": "number",
+            "reference_type": "string",
+            "condition_allowance_code": "number",
+            "condition_sign": "string",
+            "condition_value": "number"
+          },
+          "lovFields": {
+            "ALLOWANCE_CODE": {
+              "masterName": "hr_mst_allowance",
+              "columnsRequired": "allowance_code, allowance_desc"
+            },
+            "REFERRED_ALLOWANCE_CODE": {
+              "masterName": "hr_mst_allowance",
+              "columnsRequired": "allowance_code, allowance_desc"
+            },
+            "CONDITION_ALLOWANCE_CODE": {
+              "masterName": "hr_mst_allowance",
+              "columnsRequired": "allowance_code, allowance_desc"
+            }
+          },
+          "typeArray": true,
+          "uniqueRowIdentifier": "salary_norms_det_code",
+          "uniqueNormIdentifier": "salary_norms_hdr_code"
+        }
+      ]
+    },
+    "salary-advance": {
+      "getNdelete": [
+        {
+          "tableName": "hr_emp_adv_hdr",
+          "responseFieldName": "header",
+          "fieldsRequired1": "advance_code, emp_cd, adv_month, adv_year, adv_amount, card_no",
+          "fieldsRequired2": "advance_code, emp_cd, adv_month, adv_year, adv_amount, card_no",
+          "uniqueNormIdentifier": "advance_code",
+          "uniqueRowIdentifier": "advance_code"
+        },
+        {
+          "tableName": "hr_emp_adv_det",
+          "responseFieldName": "details",
+          "fieldsRequired2": "advance_cd, paid_month, paid_year, amount",
+          "uniqueNormIdentifier": "advance_cd",
+          "uniqueRowIdentifier": "advance_cd"
+        }
+      ],
+      "createNupdate": [
+        {
+          "responseFieldName": "header",
+          "tableName": "hr_emp_adv_hdr",
+          "fieldsRequired": {
+            "advance_code": "number",
+            "emp_cd": "string",
+            "adv_month": "string",
+            "adv_year": "string",
+            "adv_amount": "number",
+            "card_no": "string"
+          },
+          "lovFields": {
+            "ADV_MONTH": {
+              "masterName": "sl_mst_month",
+              "columnsRequired": "month_code, month_desc"
+            },
+            "ADV_YEAR": {
+              "masterName": "tds_year",
+              "columnsRequired": "year_code, year_desc"
+            },
+            "EMP_CD": {
+              "masterName": "sl_mst_employee",
+              "columnsRequired": "employee_code, employee_name, card_no"
+            }
+          },
+          "uniqueRowIdentifier": "advance_code",
+          "uniqueNormIdentifier": "advance_code"
+        },
+        {
+          "responseFieldName": "details",
+          "tableName": "hr_emp_adv_det",
+          "fieldsRequired": {
+            "paid_month": "string",
+            "paid_year": "string",
+            "amount": "number"
+          },
+          "typeArray": true,
+          "uniqueRowIdentifier": "unique_id",
+          "uniqueNormIdentifier": "advance_cd"
+        }
+      ]
+    }
+  
+
+  
+}
+
+
+
+
+
+
+

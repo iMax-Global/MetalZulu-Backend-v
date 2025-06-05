@@ -1,0 +1,69 @@
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "pur_purchase_return_hdr",
+          "responseFieldName": "prhdr",
+          "fieldsRequired": "mrir_no, truck_no, trans_code, remark, party_code, mrir_date, bill_date, bill_no, preturn_date, deal_type_cd, preturn_code",
+          "uniqueReqIdentifier": "mrir_code",
+          "uniqueRowIdentifier": "mrir_code"
+        },
+        {
+          "tableName": "pur_purchase_return_det",
+          "responseFieldName": "prdetail",
+          "fieldsRequired": "item_code, size_code, quality_code, pcs, mrir_wt, return_wt,mrir_pcs,return_pcs, remark, rate, amount",
+          "uniqueReqIdentifier": "mrir_code",
+          "uniqueRowIdentifier": "unique_id"
+        }
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        {
+          "responseFieldName": "prhdr",
+          "tableName": "pur_purchase_return_hdr",
+          "fieldsRequired": {
+            "deal_date": "date",
+            "truck_no": "number",
+            "trans_code": "number",
+            "remark": "string",
+            "party_code": "number",
+            "mrir_date": "date",
+            "bill_date": "date",
+            "bill_no": "number",
+            "preturn_date": "date",
+            "dealtype_cd": "number",
+            "preturn_code": "number"
+            
+            
+          }
+        },
+        {
+          "responseFieldName": "prdetail",
+          "tableName": "pur_purchase_return_det",
+          "typeArray": true,
+          "fieldsRequired": {
+            "item_code": "number",
+            "size_code": "number",
+            "quality_code": "number",
+            "pcs": "number",
+            "mrir_wt": "number",
+            "return_wt": "number",
+            "mrir_pcs": "number",
+            "retun_pcs":"number",
+            "rate": "number",
+            "amount": "number",
+            "remark": "string"
+          },
+          "lovFields": {
+            "ITEM_CODE": {
+              "masterName": "sl_mst_item",
+              "columnsRequired": "item_code, item_name"
+            }
+          },
+          "uniqueRowIdentifier": "unique_id",
+          "uniqueReqIdentifier": "mrir_code"
+        }
+      ]
+    }
+  }

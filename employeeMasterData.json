@@ -1,0 +1,440 @@
+{
+  "getNdelete": {
+    "dataSources": [
+      {
+        "tableName": "sl_mst_employee",
+        "responseFieldName": "employeeMaster",
+        "fieldsRequired": "employee_code, pf_req, rest_day, employee_name, employee_mname, employee_lname, email, unit_code, ctc, shift, employee_desig_code, gross_salary, qualifications, employee_grade_code, experience, employee_dept_code, product_code, validity_days, product_group_code, earned_lv, hod, casual_lv, tolerance, tolerance_type, employee_type_code, limit_type, overtime, salary_norm_code, acc_group_code, adhar_no, father_name, mother_name, maritial_status, to_char(dob, 'dd-mm-yyyy') as dob, sex, mediclaim_amount, height, to_char(doc, 'dd-mm-yyyy') as doc, blood_group, to_char(doj, 'dd-mm-yyyy') as doj, weight, distance_native, to_char(dow, 'dd-mm-yyyy') as dow, to_char(dol, 'dd-mm-yyyy') as dol, pan_number, insurance_amount, bank_name, branch_address, religion_code, nationality, pfaccount_no, bank_acc, esi_number, term_insurance_premium, ifsc_code, hadicapped, probation_period, term_insurance_value, file_no, reporting_to, card_no, uan, name_in_bank, disp_name, reference, address, country_code, state_code, city_code, pincode, phone, mobile, fax, address_present, country_code_present, state_code_present, city_code_present, pincode_present, phone_present, address_corr, country_code_corr, state_code_corr, city_code_corr, pincode_corr, phone_corr",
+        "uniqueEmployeeIdentifier": "employee_code",
+         "uniqueRowIdentifier": "employee_code"
+      },
+      {
+        "tableName": "hr_employee_education_det",
+        "responseFieldName": "education",
+        "fieldsRequired": "uniq_code, emp_educ_code, school_name, exam_code, exam_board, pass_year, marks, subject",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "hr_employee_language_det",
+        "responseFieldName": "languages",
+        "fieldsRequired": "uniq_code, language_det_code, language_code, read, write, speak",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "hr_employee_experience_det",
+        "responseFieldName": "experience",
+        "fieldsRequired": "uniq_code, exp_code, company_name, designation_code, to_char(from_date, 'dd-mm-yyyy') as from_date, to_char(to_date, 'dd-mm-yyyy') as to_date, gross_salary",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "hr_employee_health_det",
+        "responseFieldName": "health",
+        "fieldsRequired": "uniq_code, emp_health_code, emp_health, value",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "hr_employee_dependent_det",
+        "responseFieldName": "dependent",
+        "fieldsRequired": "uniq_code, dependent_code, name, education, earning, to_char(dob, 'dd-mm-yyyy') as dob, relation_code, insurance_amount, gender",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "hr_employee_training_det",
+        "responseFieldName": "training",
+        "fieldsRequired": "uniq_code, training_code, duration, insitute, to_char(start_date, 'dd-mm-yyyy') as start_date, skills_accuired",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "hr_employee_membership_det",
+        "responseFieldName": "membership",
+        "fieldsRequired": "uniq_code, membership_code, membership, mem_level, to_char(since_date, 'dd-mm-yyyy') as since_date, to_char(exipry_date, 'dd-mm-yyyy') as exipry_date",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "hr_employee_deptt_det",
+        "responseFieldName": "department",
+        "fieldsRequired": "uniq_code, emp_det_code, to_char(date_join, 'dd-mm-yyyy') as date_join, to_char(date_release, 'dd-mm-yyyy') as date_release",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "hr_employee_desig_det",
+        "responseFieldName": "designation",
+        "fieldsRequired": "uniq_code, emp_desig_code, designation_code, to_char(date_join, 'dd-mm-yyyy') as date_join, to_char(date_release, 'dd-mm-yyyy') as date_release",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "hr_employee_skill_det",
+        "responseFieldName": "skill",
+        "fieldsRequired": "uniq_code, emp_skill_code, skill_code",
+        "uniqueEmployeeIdentifier": "emp_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "sl_mst_emp_city",
+        "responseFieldName": "city",
+        "fieldsRequired": "uniq_code, unique_id, city_code",
+        "uniqueEmployeeIdentifier": "employee_code",
+         "uniqueRowIdentifier": "uniq_code"
+      },
+      {
+        "tableName": "sl_mst_emp_doc",
+        "responseFieldName": "documentVerification",
+        "fieldsRequired": "uniq_code, unique_id, doc_code, verify, verify_by",
+        "uniqueEmployeeIdentifier": "employee_code",
+         "uniqueRowIdentifier": "uniq_code"
+      }
+    ]
+  },
+
+  
+
+
+  "createNupdate": {
+    "fieldNames": [
+      {
+        "responseFieldName": "employeeMaster",
+        "tableName": "sl_mst_employee",
+        "fieldsRequired": {
+          "pf_req": "string",
+          "rest_day": "number",
+          "employee_name": "string",
+          "employee_mname": "string",
+          "employee_lname": "string",
+          "email": "string",
+          "unit_code": "number",
+          "ctc": "number",
+          "shift": "number",
+          "employee_desig_code": "number",
+          "gross_salary": "number",
+          "qualifications": "number",
+          "employee_grade_code": "number",
+          "experience": "string",
+          "employee_dept_code": "number",
+          "product_code": "number",
+          "validity_days": "number",
+          "product_group_code": "number",
+          "earned_lv": "number",
+          "hod": "string",
+          "casual_lv": "number",
+          "tolerance": "number",
+          "tolerance_type": "string",
+          "employee_type_code": "number",
+          "limit": "number",
+          "limit_type": "string",
+          "overtime": "number",
+          "salary_norm_code": "number",
+          "acc_group_code": "string",
+          "adhar_no": "string",
+          "father_name": "string",
+          "mother_name": "string",
+          "maritial_status": "string",
+          "dob": "date",
+          "sex": "string",
+          "mediclaim_amount": "number",
+          "height": "number",
+          "doc": "date",
+          "blood_group": "string",
+          "doj": "date",
+          "weight": "numb",
+          "distance_native": "number",
+          "dow": "date",
+          "dol": "date",
+          "pan_number": "string",
+          "insurance_amount": "number",
+          "bank_name": "string",
+          "branch_address": "string",
+          "religion_code": "number",
+          "nationality": "string",
+          "pfaccount_no": "string",
+          "bank_acc": "string",
+          "esi_number": "string",
+          "term_insurance_premium": "number",
+          "ifsc_code": "string",
+          "hadicapped": "string",
+          "probation_period": "string",
+          "term_insurance_value": "number",
+          "file_no": "string",
+          "reporting_to": "string",
+          "card_no": "string",
+          "uan": "string",
+          "name_in_bank": "string",
+          "disp_name": "string",
+          "reference": "string",
+          "address": "string",
+          "country_code": "number",
+          "state_code": "number",
+          "city_code": "number",
+          "pincode": "string",
+          "phone": "string",
+          "mobile": "string",
+          "fax": "string",
+          "address_present": "string",
+          "country_code_present": "number",
+          "state_code_present": "number",
+          "city_code_present": "number",
+          "pincode_present": "string",
+          "phone_present": "string",
+          "address_corr": "string",
+          "country_code_corr": "number",
+          "state_code_corr": "number",
+          "city_code_corr": "number",
+          "pincode_corr": "string",
+          "phone_corr": "string"
+        },
+        "lovFields": {
+          "REST_DAY": {
+            "masterName": "hr_mst_day",
+            "columnsRequired": "day_code, day_desc"
+          },
+          "UNIT_CODE": {
+            "masterName": "sl_mst_site",
+            "columnsRequired": "site_code, site_desc"
+          },
+          "SHIFT": {
+            "masterName": "hr_mst_shift",
+            "columnsRequired": "shift_code, shift_desc"
+          },
+          "EMPLOYEE_DESIG_CODE": {
+            "masterName": "sl_mst_designation",
+            "columnsRequired": "designation_code, designation"
+          },
+          "QUALIFICATIONS": {
+            "masterName": "sl_mst_qualification",
+            "columnsRequired": "qualification_code, qualification_desc"
+          },
+          "EMPLOYEE_GRADE_CODE": {
+            "masterName": "sl_mst_grade",
+            "columnsRequired": "grade_code, grade"
+          },
+          "EMPLOYEE_DEPT_CODE": {
+            "masterName": "sl_mst_department",
+            "columnsRequired": "dept_code, dept_name"
+          },
+          "EMPLOYEE_TYPE_CODE": {
+            "masterName": "sl_mst_employee_type",
+            "columnsRequired": "employee_type_code, employee_type"
+          },
+          "RELIGION_CODE": {
+            "masterName": "hr_mst_religion",
+            "columnsRequired": "religion_code, religion_desc"
+          },
+          "CITY_CODE": {
+            "masterName": "sl_mst_city",
+            "columnsRequired": "city_code, city_name, state_code"
+          },
+          "STATE_CODE": {
+            "masterName": "sl_mst_state",
+            "columnsRequired": "state_code, state_name, country_code"
+          },
+          "COUNTRY_CODE": {
+            "masterName": "sl_mst_country",
+            "columnsRequired": "country_code, country_name"
+          }
+        },
+        "uniqueRowIdentifier": "employee_code",
+        "uniqueEmployeeIdentifier": "employee_code"
+      },
+      {
+        "responseFieldName": "education",
+        "tableName": "hr_employee_education_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "school_name": "string",
+          "exam_code": "number",
+          "pass_year": "string",
+          "marks": "string",
+          "subject": "string"
+        },
+        "lovFields": {
+          "EXAM_CODE": {
+            "masterName": "hr_mst_exam",
+            "columnsRequired": "exam_code, exam_desc"
+          }
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "languages",
+        "tableName": "hr_employee_language_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "language_code": "number",
+          "read": "string",
+          "write": "string",
+          "speak": "string"
+        },
+        "lovFields": {
+          "LANGUAGE_CODE": {
+            "masterName": "hr_mst_language",
+            "columnsRequired": "language_code, language_desc"
+          }
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "experience",
+        "tableName": "hr_employee_experience_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "company_name": "string",
+          "designation_code": "number",
+          "from_date": "date",
+          "to_date": "date",
+          "gross_salary": "number"
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "health",
+        "tableName": "hr_employee_health_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "emp_health": "string",
+          "value": "string"
+        },
+        "lovFields": {
+          "emp_health": {
+            "masterName": "hr_mst_health",
+            "columnsRequired": "health_code, health_desc"
+          }
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "dependent",
+        "tableName": "hr_employee_dependent_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "name": "string",
+          "education": "number",
+          "earning": "number",
+          "dob": "date",
+          "relation_code": "number",
+          "insurance_amount": "number",
+          "gender": "string"
+        },
+        "lovFields": {
+          "RELATION_CODE": {
+            "masterName": "hr_mst_relation",
+            "columnsRequired": "relation_code, relation_desc"
+          },
+          "EDUCATION": {
+            "masterName": "hr_mst_exam",
+            "columnsRequired": "exam_code, exam_desc"
+          }
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "training",
+        "tableName": "hr_employee_training_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "duration": "number",
+          "insitute": "string",
+          "start_date": "date",
+          "skills_accuired": "string"
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "membership",
+        "tableName": "hr_employee_membership_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "membership": "string",
+          "mem_level": "string",
+          "since_date": "date",
+          "exipry_date": "date"
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "department",
+        "tableName": "hr_employee_deptt_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "deptt_code": "number",
+          "date_join": "date",
+          "date_release": "date"
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "designation",
+        "tableName": "hr_employee_desig_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "designation_code": "number",
+          "date_join": "date",
+          "date_release": "date"
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "skill",
+        "tableName": "hr_employee_skill_det",
+        "typeArray": true,
+        "fieldsRequired": {
+          "skill_code": "number"
+        },
+        "lovFields": {
+          "SKILL_CODE": {
+            "masterName": "sl_mst_skill",
+            "columnsRequired": "skill_code, skill_desc"
+          }
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "city",
+        "tableName": "sl_mst_emp_city",
+        "typeArray": true,
+        "fieldsRequired": {
+          "city_code": "number"
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      },
+      {
+        "responseFieldName": "documentVerification",
+        "tableName": "sl_mst_emp_doc",
+        "typeArray": true,
+        "fieldsRequired": {
+          "doc_code": "number",
+          "verify": "string",
+          "verify_by": "string"
+        },
+        "lovFields": {
+          "DOC_CODE": {
+            "masterName": "hr_mst_document",
+            "columnsRequired": "doc_code, doc_name"
+          }
+        },
+        "uniqueRowIdentifier": "uniq_code",
+        "uniqueEmployeeIdentifier": "emp_code"
+      }
+    ]
+  }
+}
+
+

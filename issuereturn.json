@@ -1,0 +1,83 @@
+
+{
+    "getNdelete": {
+      "dataSources": [
+        {
+          "tableName": "pur_trans_issue_return_hdr",
+          "responseFieldName": "issuereturnhdr",
+          "fieldsRequired": "return_date, issue_code, issue_date, return_code, d_code, dept_code ",
+          "uniqueIssueIdentifier": "return_code",
+          "uniqueRowIdentifier": "issue_code"
+        },
+        {
+          "tableName":"pur_trans_issue_return_det",
+          "responseFieldName":"issuereturndet",
+          "fieldsRequired":"item, size, grade, cost_center, from_store, to store, from_account, to account, issue_qty, uom_code, rate, return_qty ",
+          "uniqueIssueIdentifier":"return_code",
+          "uniqueRowIdentifier": "return_uniq"
+        }
+       
+      ]
+    },
+    "createNupdate": {
+      "fieldNames": [
+        {
+          "responseFieldName": "issuereturnhdr",
+          "tableName": "pu_trans_issue_return_hdr",
+          "fieldsRequired": {
+           "return_date":"date",
+           "issue_code":"string",
+           "issue_date":"date",
+           "return_code":"string",
+           "d_code":"string",
+           "dept_code":"smallint"
+           
+            
+          },
+          
+          "lovFields": {
+            
+            "BROKER_CODE": {
+              "masterName": "sl_mst_broker",
+              "columnsRequired": "broker_code, broker_name"
+            }
+          
+            
+           
+        },
+         
+          "uniqueRowIdentifier": "issue_code",
+          "uniqueIssueIdentifier": "issue_code"
+        },
+    {
+      
+      "responseFieldName": "issuereturndet",
+      "tableName": "pu_trans_issue_return_det",
+      "typeArray": true,
+      "fieldsRequired": {
+       "item_code":"number", 
+       "size_code":"number", 
+       "quality_code":"number",
+       "cc_code":"number",
+       "from_store_code":"string",
+       "to_store_code":"string",
+       "issue_qty":"number",
+       "uom_code":"number",
+       "rate":"number",
+       "total_wt":"number"
+    },
+   
+
+
+   
+    "uniqueRowIdentifier": "issue_code",
+    "uniqueIssueIdentifier": "return_uniq"
+  }
+
+  
+       
+        
+      ]
+    }
+  }
+  
