@@ -29,11 +29,22 @@ GROUP BY TO_CHAR(payment_date, 'YYYY-MM')
 ORDER BY month`
   );
 
+   const card3 = await client.query(
+    ` SELECT 
+    TO_CHAR(payment_date, 'YYYY-MM') AS month,
+    SUM(amount) AS total_revenue
+FROM payments
+GROUP BY TO_CHAR(payment_date, 'YYYY-MM')
+ORDER BY month`
+  );
+
+
   res.status(200).json({
     status: "success",
     data: {
       card1,
-      card2
+      card2,
+      card3
     },
   });
 });
