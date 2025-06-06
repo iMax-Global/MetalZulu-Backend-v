@@ -74,6 +74,7 @@ const AdministratorRoute = require("./routes/administratorRoutes");
 const SalaryProcess = require("./routes/salaryProcessRoutes");
 const AdministratorModule=require("./routes/administratorRightRoutes")
 const UnitMaster=require("./routes/unitMasterRoutes")
+const subscriberDashbord=require("./routes/subscriberDashboardRoute")
 //with slack work as a team
 //faerhgljkgfdgfds demo for Pramod ji
 // 1) MIDDLEWARES
@@ -540,6 +541,13 @@ app.use(
   authController.checkUser("Administrator Module"),
   AdministratorModule
 );
+app.use(
+  "/api/v1/subscriber",
+  authController.protect,
+  authController.checkUser("Administrator Module"),
+  subscriberDashbord
+);
+
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
